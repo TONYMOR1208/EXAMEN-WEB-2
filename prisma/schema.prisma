@@ -1,0 +1,22 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Entorno {
+  id            Int          @id @default(autoincrement())
+  descripcion   String
+  transacciones Transaccion[]
+}
+
+model Transaccion {
+  id          Int        @id @default(autoincrement())
+  tipo        String
+  fecha       DateTime
+  entorno     Entorno    @relation(fields: [entorno_id], references: [id])
+  entorno_id  Int
+}
